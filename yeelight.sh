@@ -1,4 +1,9 @@
 # ==========================================
+# CONTRÔLE YEELIGHT
+# ==========================================
+YEE_IP="192.168.1.22"
+
+# ==========================================
 # CONTRÔLE YEELIGHT (IP: 192.168.1.22)
 # ==========================================
 YEE_IP="192.168.1.22"
@@ -27,7 +32,6 @@ _yee_get_color() {
 
 # --- Allumer / Éteindre ---
 alias yee-on="_yee_send '{\"id\":1,\"method\":\"set_power\",\"params\":[\"on\", \"smooth\", 500]}'"
-alias yee-off="_yee_send '{\"id\":1,\"method\":\"set_power\",\"params\":[\"off\", \"smooth\", 500]}'"
 alias yee-bg-on="_yee_send '{\"id\":1,\"method\":\"bg_set_power\",\"params\":[\"on\", \"smooth\", 500]}'"
 alias yee-bg-off="_yee_send '{\"id\":1,\"method\":\"bg_set_power\",\"params\":[\"off\", \"smooth\", 500]}'"
 
@@ -76,6 +80,17 @@ yee-bg-color() {
     _yee_send '{"id":1,"method":"bg_set_rgb","params":['"$dec_val"', "smooth", 500]}'
 }
 
+# --- Éteindre l'avant et forcer le BG allumé ---
+yee-front-off() {
+    _yee_send '{"id":1,"method":"set_power","params":["off", "smooth", 500]}'
+    _yee_send '{"id":1,"method":"bg_set_power","params":["on", "smooth", 500]}'
+}
+
+yee-off() {
+    _yee_send '{"id":1,"method":"set_power","params":["off", "smooth", 500]}'
+    _yee_send '{"id":1,"method":"bg_set_power","params":["off", "smooth", 500]}'
+}
+
 # --- Menu d'aide ---
 yee-help() {
     echo -e "\n=========================================="
@@ -83,13 +98,14 @@ yee-help() {
     echo -e "==========================================\n"
     echo -e "LAMPE PRINCIPALE (Avant)"
     echo -e "  yee-on            : Allumer la lampe"
-    echo -e "  yee-off           : Éteindre la lampe"
-    echo -e "  yee-bright <%>    : Régler la luminosité (1 à 100, ex: yee-bright 50)"
-    echo -e "  yee-temp <valeur> : Régler la température (chaud, neutre, froid, ou 2700 à 6500)\n"
+    echo -e "  yee-off           : Éteindre la lampe (peut impacter le BG)"
+    echo -e "  yee-front-off     : Éteindre l'avant ET garder le BG allumé"
+    echo -e "  yee-bright <%>    : Régler la luminosité (1-100)"
+    echo -e "  yee-temp <valeur> : Régler la température (chaud, neutre, froid, ou 2700-6500)\n"
     echo -e "BACKGROUND (Arrière / Ambilight)"
-    echo -e "  yee-bg-on         : Allumer le background"
-    echo -e "  yee-bg-off        : Éteindre le background"
-    echo -e "  yee-bg-bright <%> : Régler la luminosité (1 à 100, ex: yee-bg-bright 50)"
-    echo -e "  yee-bg-color <c>  : Changer la couleur (white, red, green, blue, yellow, purple, orange)"
-    echo -e "                      ou en RGB (ex: yee-bg-color 255 0 255)\n"
+    echo -e "  yee-bg-on         : Allumer"
+    echo -e "  yee-bg-off        : Éteindre"
+    echo -e "  yee-bg-bright <%> : Régler la luminosité (1-100)"
+    echo -e "  yee-bg-color <c>  : Changer la couleur (white, red, green... ou RGB)\n"
+}o -e "                      ou en RGB (ex: yee-bg-color 255 0 255)\n"
 }
