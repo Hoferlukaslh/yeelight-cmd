@@ -1,5 +1,5 @@
-# yeelight-bash
-bash utility for my yeelight lamp
+# yeelight-cmd
+cmd utility for my yeelight lamp
 
 ## Télécharger et lancer le script
 ### Windows 
